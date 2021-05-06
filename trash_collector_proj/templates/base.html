@@ -5,10 +5,16 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-{% if user.is_authenticated %}
+<!--{% if user.is_authenticated %}
   {% for group in user.groups.all%}
-    {% if group.name == "Customers" %}
-    <p>Customer Navbar</p>
+    {% if group.name == "Customers" %}-->
+    <nav>
+      <ul>
+        <li>Account Info</li>
+        <li>Change Pick-up Day</li>
+        <li>Suspend Account</li>
+      </ul>
+    </nav>
     {% elif group.name == "Employees" %}
     <p>Employee Navbar</p>
     {% endif %}
