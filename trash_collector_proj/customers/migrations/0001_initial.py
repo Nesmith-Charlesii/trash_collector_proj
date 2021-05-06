@@ -15,12 +15,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Employee',
+            name='Customer',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('route_zipcode', models.CharField(max_length=50)),
-                ('employee', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('weekly_pickup', models.CharField(max_length=50)),
+                ('one_time_pickup', models.DateField()),
+                ('balance', models.IntegerField()),
+                ('start_date', models.DateField()),
+                ('end_date', models.DateField()),
+                ('address', models.CharField(max_length=50)),
+                ('zipcode', models.CharField(max_length=50)),
+                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
