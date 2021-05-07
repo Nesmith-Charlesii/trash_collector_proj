@@ -5,9 +5,9 @@
   <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<!--{% if user.is_authenticated %}
+{% if user.is_authenticated %}
   {% for group in user.groups.all%}
-    {% if group.name == "Customers" %}-->
+    {% if group.name == "Customers" %}
     <nav>
       <ul>
         <li>Account Info</li>
