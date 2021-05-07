@@ -8,7 +8,7 @@
     <title>create</title>
 </head>
 <body>
-<form action="{% url 'customer:create' %}" method="post">
+<form action="{% url 'customers:create' %}" method="post">
     {% csrf_token %}
     name:<input type="text" name="name" id="name"><br>
     address:<input type="text" name="address" id="address"><br>

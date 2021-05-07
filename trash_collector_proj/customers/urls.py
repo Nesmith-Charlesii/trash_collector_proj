@@ -7,5 +7,6 @@ from . import views
 app_name = "customers"
 urlpatterns = [
     path('', views.index, name="index"),
-    path('new/', views.create, name='new_customer'),
+    path('customer_form/', views.customer_form, name='customer_form'),
+    path('create_profile/', views.create, name='create'),
 ]

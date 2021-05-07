@@ -1,5 +1,6 @@
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from .models import Customer
 # Create your views here.
 
@@ -13,7 +14,11 @@ def index(request):
     # This will allow you to later query the database using the logged-in user,
     # thereby finding the customer/employee profile that matches with the logged-in user.
     print(user)
-    return render(request, 'customers/index.html')
+    return HttpResponseRedirect(reverse('customers:customer_form'))
+
+
+def customer_form(request):
+    return render(request, 'customers/customer.html')
 
 
 def create(request):
