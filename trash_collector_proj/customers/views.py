@@ -1,4 +1,4 @@
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Customer
@@ -22,6 +22,7 @@ def customer_form(request):
 
 
 def create(request):
+    user_id = request.user
     if request.method == 'POST':
         name = request.POST.get('name')
         weekly_pickup = request.POST.get('weekly_pickup')
@@ -30,9 +31,16 @@ def create(request):
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         address = request.POST.get('address')
-        zip_code = request.POST.get('zip_code')
-        new_customer = Customer(name=name, weekly_pickup=weekly_pickup, one_time_pickup=one_time_pickup, balance=balance, start_date=start_date, end_date=end_date, address=address, zip_code=zip_code)
+        zip_code = request.POST.get('zipcode')
+        user_id = user_id
+        new_customer = Customer(name=name, weekly_pickup=weekly_pickup, one_time_pickup=one_time_pickup,
+                                balance=balance, start_date=start_date, end_date=end_date, address=address,
+                                zipcode=zip_code, user=user_id)
         new_customer.save()
-        return HttpResponseRedirect(reversed('customers:new_customer'))
+        return HttpResponseRedirect(reverse('customers:customer_profile'))
     else:
-        return render(request, '/home.html')
+        return render(request, '/customer.html')
+
+
+def customer_profile(request):
+    return render(request, 'customers/customer_profile.html')
