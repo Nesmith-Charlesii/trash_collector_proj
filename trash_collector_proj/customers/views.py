@@ -56,3 +56,7 @@ def customer_profile(request, customer_id):
         'customer': customer
     }
     return render(request, 'customers/customer_profile.html', context)
+
+
+def change_pickup(request, customer_id):
+    pass
