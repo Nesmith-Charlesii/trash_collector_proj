@@ -21,8 +21,8 @@ def index(request):
             print(f'customer ID is {customer.id}')
             return HttpResponseRedirect(f'customer_profile/{customer.id}')
         else:
-            print('')
-    return HttpResponseRedirect(reverse('customers:customer_form'))
+            print('This user has no customer profile')
+        return HttpResponseRedirect(reverse('customers:customer_form'))
 
 
 def customer_form(request):
