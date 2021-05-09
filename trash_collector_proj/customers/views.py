@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Customer
-# Create your views here.
+
 
 # TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
 
@@ -14,6 +14,14 @@ def index(request):
     # This will allow you to later query the database using the logged-in user,
     # thereby finding the customer/employee profile that matches with the logged-in user.
     print(user)
+    customers = Customer.objects.all()
+    for customer in customers:
+        if user.id == customer.user.id:
+            print(f'This user has a customer account')
+            print(f'customer ID is {customer.id}')
+            return HttpResponseRedirect(f'customer_profile/{customer.id}')
+        else:
+            print('')
     return HttpResponseRedirect(reverse('customers:customer_form'))
 
 
@@ -42,6 +50,9 @@ def create(request):
         return render(request, '/customer.html')
 
 
-def customer_profile(request):
-
-    return render(request, 'customers/customer_profile.html')
+def customer_profile(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    context = {
+        'customer': customer
+    }
+    return render(request, 'customers/customer_profile.html', context)
