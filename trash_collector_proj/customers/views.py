@@ -59,4 +59,8 @@ def customer_profile(request, customer_id):
 
 
 def change_pickup(request, customer_id):
-    pass
+    customer = Customer.objects.get(pk=customer_id)
+    context = {
+        'customer': customer
+    }
+    return render(request, 'customers/change_pickup.html', context)
