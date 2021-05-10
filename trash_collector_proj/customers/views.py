@@ -73,4 +73,3 @@ def update_weekly_pickup(request, customer_id):
     customer.save()
     # include '/' before redirect
     return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
-

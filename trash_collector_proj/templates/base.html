@@ -22,9 +22,12 @@
       </ul>
     </nav>
     {% elif group.name == "Employees" %}
-    <p>Employee Navbar</p>
+<nav>
+<H3>EMPLOYEE NAV BAR</H3>
+    <p><a href="">Account Info</a></p>
     {% endif %}
   {% endfor %}
+</nav>
   <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% endif %}
   <main>
