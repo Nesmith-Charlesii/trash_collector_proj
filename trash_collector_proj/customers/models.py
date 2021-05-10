@@ -8,11 +8,11 @@ from django.db import models
 
 class Customer(models.Model):
     name = models.CharField(max_length=50)
-    weekly_pickup = models.CharField(max_length=50)
-    one_time_pickup = models.DateField(blank=True, null=True)
-    balance = models.IntegerField(default=0)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    weekly_pickup = models.CharField(max_length=50, null=True)
+    one_time_pickup = models.DateField(null=True, blank=True)
+    balance = models.IntegerField()
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
     address = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=50)
     user = models.ForeignKey('accounts.User', blank=True, null=True, on_delete=models.CASCADE)
