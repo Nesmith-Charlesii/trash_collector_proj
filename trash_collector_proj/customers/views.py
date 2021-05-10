@@ -19,7 +19,7 @@ def index(request):
         if user.id == customer.user.id:
             print(f'This user has a customer account')
             print(f'customer ID is {customer.id}')
-            return HttpResponseRedirect(f'/customer_profile/{customer.id}')
+            return HttpResponseRedirect(f'customer_profile/{customer.id}')
         else:
             print('This user has no customer profile')
     return HttpResponseRedirect(reverse('customers:customer_form'))
@@ -68,4 +68,12 @@ def update_weekly_pickup(request, customer_id):
     customer.save()
     # include '/' before redirect
     return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+
+
+def one_time_pickup(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customer.one_time_pickup = request.POST.get('one_time_pickup')
+    customer.save()
+    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+
 
