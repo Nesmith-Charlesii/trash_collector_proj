@@ -11,9 +11,11 @@
 {% if user.is_authenticated %}
   {% for group in user.groups.all%}
     {% if group.name == "Customers" %}
-    <nav>
-      <h3>Trash Collector</h3>
-      <ul>
+    <nav class="navbar navbar-dark">
+      <div class="logo">
+        <h3>Trash Collector</h3>
+      </div>
+      <ul class="nav justify-content-right">
         {% block anchors %}
         <li><a href="">Account Info</a></li>
         <li><a href="">Change Pick-up Day</a></li>

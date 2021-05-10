@@ -1,26 +1,21 @@
-/*html, body{
-    margin: 0px;
-    box-sizing: border-box;
-}
-
-h3{
-    color: rgb(80,80,80);
-    margin-left: 20px;
-}
-
 nav{
-    display:flex;
-    justify-content: space-between;
     background-color: black;
-    align-items: center;
 }
 
-nav ul{
-    display: flex;
-}
-
-nav ul li{
+ul li{
     margin-right: 20px;
-    list-style: none;
 }
-*/
+
+ul li a{
+    display: block;
+    color: white;
+}
+
+ul li a:hover{
+    text-decoration: none;
+    color: gold;
+}
+
+.logo h3{
+    color: white;
+}
