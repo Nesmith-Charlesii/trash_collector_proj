@@ -10,7 +10,7 @@ class Customer(models.Model):
     name = models.CharField(max_length=50)
     weekly_pickup = models.CharField(max_length=50)
     one_time_pickup = models.DateField()
-    balance = models.IntegerField()
+    balance = models.IntegerField(default=0)
     start_date = models.DateField()
     end_date = models.DateField()
     address = models.CharField(max_length=50)
