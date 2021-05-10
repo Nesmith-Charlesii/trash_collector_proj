@@ -64,3 +64,13 @@ def change_pickup(request, customer_id):
         'customer': customer
     }
     return render(request, 'customers/change_pickup.html', context)
+
+
+def update_weekly_pickup(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    change_weekly_pickup = request.POST.get('update_weekly_pickup')
+    customer.weekly_pickup = change_weekly_pickup
+    customer.save()
+    # include '/' before redirect
+    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+

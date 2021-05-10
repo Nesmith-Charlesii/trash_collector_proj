@@ -10,5 +10,9 @@
 
 {% block content %}
 <h1>John Doe</h1>
-<h4>Change Pickup</h4>
+<form action="{% url 'customers:update_weekly_pickup' customer.id %}" method="post">
+    {% csrf_token %}
+    weekly pickup change: <input type="text" id="update_weekly_pickup" name="update_weekly_pickup">
+    <input type="submit" value="update">
+</form>
 {% endblock %}
