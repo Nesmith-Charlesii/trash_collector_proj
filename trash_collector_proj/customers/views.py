@@ -35,14 +35,12 @@ def create(request):
         name = request.POST.get('name')
         weekly_pickup = request.POST.get('weekly_pickup')
         one_time_pickup = request.POST.get('one_time_pickup')
-        balance = request.POST.get('balance')
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         address = request.POST.get('address')
         zip_code = request.POST.get('zipcode')
         user_id = user_id
-        new_customer = Customer(name=name, weekly_pickup=weekly_pickup, one_time_pickup=one_time_pickup,
-                                balance=balance, start_date=start_date, end_date=end_date, address=address,
+        new_customer = Customer(name=name, balance=0, weekly_pickup=weekly_pickup, one_time_pickup=one_time_pickup, start_date=start_date, end_date=end_date, address=address,
                                 zipcode=zip_code, user=user_id)
         new_customer.save()
         return HttpResponseRedirect(reverse('customers:customer_profile'))
