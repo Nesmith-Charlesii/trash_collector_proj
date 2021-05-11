@@ -40,9 +40,11 @@ def employee_profile(request, employee_id):
     customers = apps.get_model('customers.Customer')
     all_customers = customers.objects.all()
     today = date.today()
+    day = date.today().strftime("%A")
     context = {
         'employee': employee,
         'customers': all_customers,
-        'date': today
+        'date': today,
+        'day': day
     }
     return render(request, 'employees/employee_profile.html', context)
