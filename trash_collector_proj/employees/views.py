@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.apps import apps
 from .models import Employee
+from datetime import date
 
 # Create your views here.
 
@@ -36,7 +37,12 @@ def create_employee_profile(request):
 
 def employee_profile(request, employee_id):
     employee = Employee.objects.get(pk=employee_id)
+    customers = apps.get_model('customers.Customer')
+    all_customers = customers.objects.all()
+    today = date.today()
     context = {
-        'employee': employee
+        'employee': employee,
+        'customers': all_customers,
+        'date': today
     }
     return render(request, 'employees/employee_profile.html', context)

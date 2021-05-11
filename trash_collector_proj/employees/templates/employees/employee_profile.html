@@ -2,4 +2,19 @@
 
 {% block content %}
 <h1>Welcome {{employee.name}}</h1>
+<p>my zip-code: {{employee.route_zipcode}}</p>
+<br>
+{% for customer in customers %}
+    {% if employee.route_zipcode == customer.zipcode and customer.start_date is not None %}
+        <p>{{customer.name}} : {{customer.zipcode}}</p>
+    {% endif %}
+{% endfor %}
+<br>
+{% for customer in customers %}
+    {% if customer.one_time_pickup == date %}
+        <p>{{customer.name}} - {{customer.one_time_pickup}}</p>
+    {% endif %}
+{% endfor %}
+
+
 {% endblock %}
