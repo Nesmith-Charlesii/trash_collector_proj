@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import Customer
 
-
 # TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
 
 
@@ -77,3 +76,17 @@ def one_time_pickup(request, customer_id):
     return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
 
 
+def account_period(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customer.start_date = request.POST.get('start_date')
+    customer.end_date = request.POST.get('end_date')
+    customer.save()
+    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+
+
+def suspend_account(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customer.start_date = ""
+    customer.end_date = ""
+    customer.save()
+    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
