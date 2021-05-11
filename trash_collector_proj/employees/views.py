@@ -63,13 +63,22 @@ def employee_prospects(request, employee_id):
 
 def prospect_search(request, employee_id):
     employee = Employee.objects.get(pk=employee_id)
-    customer = apps.get_model('customer.Customer')
-    all_customers = customer.objects.all()
     if request.method == 'POST':
-        pickup_day = request.POST.get('pickup_day')
-        context = {
-            'employee': employee,
-            'customers': all_customers,
-            'pickup_day': pickup_day
-        }
-        return HttpResponseRedirect(f'/employees/employee_prospects/{employee.id}', context)
+        form_input = request.POST.get('pickup_day')
+        return HttpResponseRedirect(f'/employees/employee_prospect/results/{form_input}/{employee.id}')
+
+
+def employee_prospect_results(request, form_input, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    Customer = apps.get_model('customers.Customer')
+    customers = Customer.objects.all()
+    pickup_day = form_input
+    prospects = Customer.objects.filter(weekly_pickup=pickup_day)
+    context = {
+        'employee': employee,
+        'customers': customers,
+        'prospects': prospects
+    }
+    print(pickup_day)
+    print(customers)
+    return render(request, 'employees/employee_prospect_results.html', context)

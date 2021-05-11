@@ -15,5 +15,9 @@
 </form>
 <br>
 <h3>Prospects</h3>
-
+{% for prospect in prospects %}
+    {% if prospect.zipcode == employee.route_zipcode %}
+        <p>{{prospect.name}}-{{prospect.weekly_pickup}}</p>
+    {% endif %}
+{% endfor %}
 {% endblock %}
