@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block anchors_employee %}
+    <li><a href="">Daily View</a></li>
+    <li><a href="">Prospects</a></li>
+    <li><a href="">Confirm Pickups</a></li>
+{% endblock %}
+
 {% block content %}
 <h1>Welcome {{employee.name}}</h1>
 <h2>Today - {{day}}</h2>

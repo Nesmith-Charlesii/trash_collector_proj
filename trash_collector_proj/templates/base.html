@@ -24,7 +24,18 @@
       </ul>
     </nav>
     {% elif group.name == "Employees" %}
-    <p>Employee Navbar</p>
+    <nav class="navbar navbar-dark">
+      <div class="logo">
+        <h3>Trash Collector</h3>
+      </div>
+      <ul class="nav justify-content-right">
+         {% block anchors_employee %}
+        <li><a href="">Account Info</a></li>
+        <li><a href="">Change Pick-up Day</a></li>
+        <li><a href="">Suspend Account</a></li>
+        {% endblock %}
+      </ul>
+    </nav>
     {% endif %}
   {% endfor %}
   <p><a href="{% url 'logout' %}">Log Out</a></p>
