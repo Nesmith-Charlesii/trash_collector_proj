@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block anchors_employee %}
+    <li><a href="{% url 'employees:employee_profile' employee.id %}">Daily View</a></li>
+    <li><a href="">Prospects</a></li>
+    <li><a href="">Confirm Pickups</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>{{employee.name}} Prospects by Day</h1>
+<form action="{% url 'employees:prospect_search' employee.id%}" method="post">
+    Pickup day: <input type="text" id="pickup_day" name="pickup_day">
+    <input type="submit" value="search">
+</form>
+{% endblock %}

@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block anchors_employee %}
-    <li><a href="">Daily View</a></li>
-    <li><a href="">Prospects</a></li>
+    <li><a href="{% url 'employees:employee_profile' employee.id %}">Daily View</a></li>
+    <li><a href="{% url 'employees:employee_prospects' employee.id %}">Prospects</a></li>
     <li><a href="">Confirm Pickups</a></li>
 {% endblock %}
 
