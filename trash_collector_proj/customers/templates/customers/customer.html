@@ -1,13 +1,24 @@
-{% extends 'base.html' %}
-
-{% block content %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>create</title>
+</head>
+<body>
 <form action="{% url 'customers:create' %}" method="post">
     {% csrf_token %}
-    <div class="form-group center">
-        name:<input class="form-control form-control-sm col-sm-4" type="text" name="name" id="name"><br>
-        address:<input class="form-control form-control-sm col-sm-4" type="text" name="address" id="address"><br>
-        zipcode:<input class="form-control form-control-sm col-sm-4" type="text" name="zipcode" id="zipcode"><br>
-    </div>
+    name:<input type="text" name="name" id="name"><br>
+    address:<input type="text" name="address" id="address"><br>
+    weekly pickup:<input type="text" name="weekly_pickup" id="weekly_pickup"><br>
+    one time pickup:<input type="date" name="one_time_pickup" id="one_time_pickup"><br>
+    zipcode:<input type="text" name="zipcode" id="zipcode"><br>
+    balance:<input type="text" name="balance" id="balance"><br>
+    start date:<input type="date" name="start_date" id="start_date"><br>
+    end date:<input type="date" name="end_date" id="end_date"><br>
     <input type="submit" value="sign up">
 </form>
-{% endblock %}
+</body>
+</html>
