@@ -12,5 +12,6 @@ urlpatterns = [
     path('employee_profile/<int:employee_id>/', views.employee_profile, name='employee_profile'),
     path('employee_prospects/<int:employee_id>', views.employee_prospects, name='employee_prospects'),
     path('employee_prospect_search/<int:employee_id>/', views.prospect_search, name='prospect_search'),
-    path('employee_prospect/results/<str:form_input>/<int:employee_id>/', views.employee_prospect_results, name='employee_prospect_results')
+    path('employee_prospect/results/<str:form_input>/<int:employee_id>/', views.employee_prospect_results, name='employee_prospect_results'),
+    path('confirm_pickup/one_time/<int:employee_id>/<int:customer_id>/', views.confirm_one_time, name='confirm_one_time')
 ]

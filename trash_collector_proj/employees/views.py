@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.apps import apps
 from .models import Employee
 from datetime import date
@@ -82,3 +82,13 @@ def employee_prospect_results(request, form_input, employee_id):
     print(pickup_day)
     print(customers)
     return render(request, 'employees/employee_prospect_results.html', context)
+
+
+def confirm_one_time(request, customer_id, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    Customer = apps.get_model('customers.Customer')
+    target_customer = Customer.objects.get(pk=customer_id)
+    target_customer.one_time_pickup = None
+    target_customer.balance += 10
+    target_customer.save()
+    return redirect(f'/employees/employee_profile/{employee.id}')
