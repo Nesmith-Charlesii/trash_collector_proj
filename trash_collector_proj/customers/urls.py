@@ -12,5 +12,7 @@ urlpatterns = [
     path('customer_profile/<int:customer_id>/', views.customer_profile, name='customer_profile'),
     path('customer_profile/change_pickup/<int:customer_id>', views.change_pickup, name='change_pickup'),
     path('update_weekly_pickup/<int:customer_id>', views.update_weekly_pickup, name='update_weekly_pickup'),
-    path('one_time_pickup/<int:customer_id>', views.one_time_pickup, name='one_time_pickup')
+    path('one_time_pickup/<int:customer_id>', views.one_time_pickup, name='one_time_pickup'),
+    path('account_period/<int:customer_id>', views.account_period, name='account_period'),
+    path('suspend_account/<int:customer_id>', views.suspend_account, name='suspend_account')
 ]

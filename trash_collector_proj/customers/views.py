@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import Customer
 
-
 # TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
 
 
@@ -22,7 +21,7 @@ def index(request):
             return HttpResponseRedirect(f'customer_profile/{customer.id}')
         else:
             print('This user has no customer profile')
-        return HttpResponseRedirect(reverse('customers:customer_form'))
+    return HttpResponseRedirect(reverse('customers:customer_form'))
 
 
 def customer_form(request):
@@ -73,5 +72,21 @@ def update_weekly_pickup(request, customer_id):
 def one_time_pickup(request, customer_id):
     customer = Customer.objects.get(pk=customer_id)
     customer.one_time_pickup = request.POST.get('one_time_pickup')
+    customer.save()
+    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+
+
+def account_period(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customer.start_date = request.POST.get('start_date')
+    customer.end_date = request.POST.get('end_date')
+    customer.save()
+    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+
+
+def suspend_account(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    customer.start_date = ""
+    customer.end_date = ""
     customer.save()
     return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')

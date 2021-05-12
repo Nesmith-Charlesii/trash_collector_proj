@@ -23,4 +23,13 @@
     <input type="date" id="one_time_pickup" name="one_time_pickup">
     <input type="submit" value="confirm">
 </form>
+<p>You'll need a start and end date period in order to schedule weekly trash pickups</p>
+<form action="{% url 'customers:account_period' customer.id %}" method="post">
+    {% csrf_token %}
+    <p>start date:</p>
+    <input type="date" id="start_date" name="start_date">
+    <p>end date:</p>
+    <input type="date" id="end_date" name="end_date">
+    <input type="submit" value="confirm">
+</form>
 {% endblock %}

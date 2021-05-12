@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block anchors_employee %}
+    <li><a href="{% url 'employees:employee_profile' employee.id %}">Daily View</a></li>
+    <li><a href="{% url 'employees:employee_prospects' employee.id %}">Prospects</a></li>
+    <li><a href="">Confirm Pickups</a></li>
+{% endblock %}
+
+{% block content %}
+<h1>Welcome {{employee.name}}</h1>
+<h2>Today - {{day}}</h2>
+<p>my zip-code: {{employee.route_zipcode}}</p>
+<br>
+<h3>Customers in my area:</h3>
+{% for customer in customers %}
+    {% if employee.route_zipcode == customer.zipcode and customer.start_date is not None %}
+        <p>{{customer.name}} : {{customer.zipcode}}</p>
+    {% endif %}
+{% endfor %}
+<br>
+<h3>Customer Pickups Today</h3>
+{% for customer in customers %}
+    {% if customer.one_time_pickup == date %} %}
+        <p>{{customer.name}} - {{customer.one_time_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/one_time/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
+    {% elif customer.weekly_pickup == day %}
+        <p>{{customer.name}} - {{customer.weekly_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/weekly/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
+    {% endif %}
+{% endfor %}
+
+
+{% endblock %}
