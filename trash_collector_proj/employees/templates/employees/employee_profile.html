@@ -4,6 +4,7 @@
     <li><a href="{% url 'employees:employee_profile' employee.id %}">Daily View</a></li>
     <li><a href="{% url 'employees:employee_prospects' employee.id %}">Prospects</a></li>
     <li><a href="">Confirm Pickups</a></li>
+    <li><a href="{% url 'logout' %}">Log Out</a></li>
 {% endblock %}
 
 {% block content %}
