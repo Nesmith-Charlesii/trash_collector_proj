@@ -1,13 +1,15 @@
 nav{
-
+    background-color: rgb(8, 10, 105);
 }
 
 ul li{
     margin-right: 20px;
+    text-transform: uppercase;
 }
 
 ul li a{
     display: block;
+    color: white
 }
 
 ul li a:hover{
@@ -16,5 +18,7 @@ ul li a:hover{
 }
 
 .logo h3{
-
+    font-weight: bold;
+    font-family: arial;
+    color: white;
 }

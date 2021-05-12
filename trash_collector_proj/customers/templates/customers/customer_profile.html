@@ -18,43 +18,83 @@
 <div class="text-center my-5">
     <h1>Welcome {{customer.name}}</h1>
 </div>
+    {% if customer.start_date == None or customer.end_date == None %}
+    <p id="message">YOU WILL NEED A START AND END DATE IN ORDER TO SCHEDULE YOUR WEEKLY TRASH PICKUPS</p>
+    {% elif customer.start_date != None and customer.end_date != None %}
+    <p id="transparent">transparent</p>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-2"></div>
-    <div class="col-5">
-        <h3>Balance: {{customer.balance}}</h3>
-        <h3>Weekly Pickup: {{customer.weekly_pickup}}</h3>
-        <h3>Start Date: {{customer.start_date}}</h3>
-        <h3>End Date: {{customer.end_date}}</h3>
-        <h3>One-Time Pickup: {{customer.one_time_pickup}}</h3>
+<div class="container">
+    <div class="display my-2">
+        <div class="left-side">
+            <div class="balance">
+                <h3>BALANCE: {{customer.balance}}</h3>
+            </div>
+            <div class="weekly_pickup">
+                <h3>WEEKLY PICKUP: {{customer.weekly_pickup}}</h3>
+            </div>
+        </div>
+        <div class="right-side">
+            {% if customer.start_date == None or customer.end_date == None %}
+            <form action="{% url 'customers:account_period' customer.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="start_end_date">
+                        <div class="start_date">
+                            <label for="start_date" class="mx-3">START DATE:</label>
+                            <input class="form-control col-5" type="date" id="start_date" name="start_date">
+                        </div>
+                        <hr>
+                        <div class="end_date">
+                            <label for="end_date" class="mx-3">END DATE:</label>
+                            <input class="form-control col-5" type="date" id="end_date" name="end_date">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="confirm">
+                    <input id="confirm" type="submit" value="CONFIRM">
+                </div>
+            </form>
+        </div>
+        {% elif customer.start_date != None and customer.end_date != None %}
+        <div class="right-side-display">
+            <div class="start_date_display">
+                <h3 id="display_start_date">START DATE: {{customer.start_date}}</h3>
+            </div>
+            <hr>
+            <div class="end_date_display">
+                <h3 id="display_end_date">END DATE: {{customer.end_date}}</h3>
+            </div>
+        </div>
     </div>
-    <div class="col-5 text-center">
-        {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup == None %}
-        <p>Schedule a weekly <a href="{% url 'customers:change_pickup' customer.id %}">pick up day</a> to start your service</p>
-{% endif %}
-<br>
-        {% if customer.start_date != None and customer.end_date != None %}
-        <p>Would you like an extra one time pickup?</p>
-        <form action="{% url 'customers:one_time_pickup' customer.id %}" method="post">
-            {% csrf_token %}
-            <input type="date" id="one_time_pickup" name="one_time_pickup">
-            <input type="submit" value="confirm">
-        </form>
-{% endif %}
-<br>
-        {% if customer.start_date == None or customer.end_date == None %}
-        <p>You'll need a start and end date period in order to schedule weekly trash pickups</p>
-        <form action="{% url 'customers:account_period' customer.id %}" method="post">
-            {% csrf_token %}
-            <p>start date:</p>
-            <input type="date" id="start_date" name="start_date">
-            <p>end date:</p>
-            <input type="date" id="end_date" name="end_date">
-            <input type="submit" value="confirm">
-        </form>
-{% endif %}
+    </div>
+        {% endif %}
+    <div class="display-bottom">
+        <div class="weekly-pickup">
+            {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup == None %}
+            <p>Schedule a weekly <a href="{% url 'customers:change_pickup' customer.id %}">pick up day</a> to start your service</p>
+            {% endif %}
+        </div>
+        {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup != None %}
+        <div class="one-time-request">
+            <form action="{% url 'customers:one_time_pickup' customer.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group d-flex flex-row one-time-group">
+                    <p id="label-one-time">Would you like an extra one time pickup?</p>
+                    <input class="form-control col-5" type="date" id="one_time_pickup" name="one_time_pickup">
+                    <input id="confirm-one-time" type="submit" value="confirm">
+                </div>
+            </form>
+            {% endif %}
+            {% if customer.one_time_pickup != None %}
+        <div class="one-time">
+            <h3>One-Time Pickup: {{customer.one_time_pickup}}</h3>
+        </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
