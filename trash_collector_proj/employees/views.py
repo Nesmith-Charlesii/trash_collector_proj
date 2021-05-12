@@ -92,3 +92,13 @@ def confirm_one_time(request, customer_id, employee_id):
     target_customer.balance += 10
     target_customer.save()
     return redirect(f'/employees/employee_profile/{employee.id}')
+
+
+def confirm_weekly(request, customer_id, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    Customer = apps.get_model('customers.Customer')
+    target_customer = Customer.objects.get(pk=customer_id)
+    target_customer.weekly_pickup = None
+    target_customer.balance += 10
+    target_customer.save()
+    return redirect(f'/employees/employee_profile/{employee.id}')

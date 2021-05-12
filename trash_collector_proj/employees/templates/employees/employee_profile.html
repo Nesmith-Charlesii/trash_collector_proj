@@ -23,7 +23,7 @@
     {% if customer.one_time_pickup == date %} %}
         <p>{{customer.name}} - {{customer.one_time_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/one_time/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
     {% elif customer.weekly_pickup == day %}
-        <p>{{customer.name}} - {{customer.weekly_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/one_time/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
+        <p>{{customer.name}} - {{customer.weekly_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/weekly/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
     {% endif %}
 {% endfor %}
 
