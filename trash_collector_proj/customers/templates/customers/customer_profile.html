@@ -1,35 +1,60 @@
 {% extends 'base.html' %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/customer_profile.css' %}">
+{% endblock %}
+
 {% block title %} {{customer.name}} | Trash_collector {% endblock %}
 
 {% block anchors %}
 <li><a href="{% url 'customers:customer_profile' customer.id %}">Account Info</a></li>
 <li><a href="{% url 'customers:change_pickup' customer.id %}">Change Pick-up Day</a></li>
-<li><a href="">Suspend Account</a></li>
+<li><a href="{% url 'customers:suspend_account' customer.id %}">Suspend Account</a></li>
+<li><a href="{% url 'logout' %}">Log Out</a></li>
+{% endblock %}
+
+{% block header %}
+<div class="text-center my-5">
+    <h1>Welcome {{customer.name}}</h1>
+</div>
 {% endblock %}
 
 {% block content %}
-<h1>Welcome {{customer.name}}</h1>
-<h3>Balance: {{customer.balance}}</h3>
-<h3>Weekly Pickup: {{customer.weekly_pickup}}</h3>
-<h3>Start Date: {{customer.start_date}}</h3>
-<h3>End Date: {{customer.end_date}}</h3>
-<h3>One-Time Pickup: {{customer.one_time_pickup}}</h3>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-5">
+        <h3>Balance: {{customer.balance}}</h3>
+        <h3>Weekly Pickup: {{customer.weekly_pickup}}</h3>
+        <h3>Start Date: {{customer.start_date}}</h3>
+        <h3>End Date: {{customer.end_date}}</h3>
+        <h3>One-Time Pickup: {{customer.one_time_pickup}}</h3>
+    </div>
+    <div class="col-5 text-center">
+        {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup == None %}
+        <p>Schedule a weekly <a href="{% url 'customers:change_pickup' customer.id %}">pick up day</a> to start your service</p>
+{% endif %}
 <br>
-<p>Would you like an extra one time pickup?</p>
-<form action="{% url 'customers:one_time_pickup' customer.id %}" method="post">
-    {% csrf_token %}
-    <p>one time pickup</p>
-    <input type="date" id="one_time_pickup" name="one_time_pickup">
-    <input type="submit" value="confirm">
-</form>
-<p>You'll need a start and end date period in order to schedule weekly trash pickups</p>
-<form action="{% url 'customers:account_period' customer.id %}" method="post">
-    {% csrf_token %}
-    <p>start date:</p>
-    <input type="date" id="start_date" name="start_date">
-    <p>end date:</p>
-    <input type="date" id="end_date" name="end_date">
-    <input type="submit" value="confirm">
-</form>
+        {% if customer.start_date != None and customer.end_date != None %}
+        <p>Would you like an extra one time pickup?</p>
+        <form action="{% url 'customers:one_time_pickup' customer.id %}" method="post">
+            {% csrf_token %}
+            <input type="date" id="one_time_pickup" name="one_time_pickup">
+            <input type="submit" value="confirm">
+        </form>
+{% endif %}
+<br>
+        {% if customer.start_date == None or customer.end_date == None %}
+        <p>You'll need a start and end date period in order to schedule weekly trash pickups</p>
+        <form action="{% url 'customers:account_period' customer.id %}" method="post">
+            {% csrf_token %}
+            <p>start date:</p>
+            <input type="date" id="start_date" name="start_date">
+            <p>end date:</p>
+            <input type="date" id="end_date" name="end_date">
+            <input type="submit" value="confirm">
+        </form>
+{% endif %}
+    </div>
+</div>
 {% endblock %}

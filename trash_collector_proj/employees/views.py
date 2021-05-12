@@ -1,3 +1,5 @@
+import random
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.apps import apps
@@ -14,8 +16,11 @@ def index(request):
     Customer = apps.get_model('customers.Customer')
     user = request.user
     print(user)
+    all_employees = Employee.objects.all()
+    for employee in all_employees:
+        if user.id == employee.user_id:
+            return HttpResponseRedirect(f'/employees/employee_profile/{employee.id}')
     return HttpResponseRedirect(f'/employees/employee_form')
-    # return render(request, 'employees/index.html')
 
 
 def employee_form(request):

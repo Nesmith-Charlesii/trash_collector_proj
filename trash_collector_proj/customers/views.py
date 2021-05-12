@@ -1,7 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Customer
+
 
 # TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
 
@@ -47,7 +48,7 @@ def create(request):
 def customer_profile(request, customer_id):
     customer = Customer.objects.get(pk=customer_id)
     context = {
-        'customer': customer
+        'customer': customer,
     }
     return render(request, 'customers/customer_profile.html', context)
 
@@ -86,7 +87,9 @@ def account_period(request, customer_id):
 
 def suspend_account(request, customer_id):
     customer = Customer.objects.get(pk=customer_id)
-    customer.start_date = ""
-    customer.end_date = ""
+    customer.start_date = None
+    customer.end_date = None
+    customer.weekly_pickup = None
+    customer.one_time_pickup = None
     customer.save()
     return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
