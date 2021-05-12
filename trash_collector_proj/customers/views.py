@@ -1,92 +1,105 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-from .models import Customer
+from django.shortcuts import render, redirect
+from django.apps import apps
+from .models import Employee
+from datetime import date
 
-# TODO: Create a function for each path created in customers/urls.py. Each will need a template as well.
+# Create your views here.
+
+# TODO: Create a function for each path created in employees/urls.py. Each will need a template as well.
 
 
 def index(request):
-    # The following line will get the logged-in in user (if there is one) within any view function
+    # Get the Customer model from the other app, it can now be used to query the db
+    Customer = apps.get_model('customers.Customer')
     user = request.user
-    # It will be necessary while creating a customer/employee to assign the logged-in user as the user foreign key
-    # This will allow you to later query the database using the logged-in user,
-    # thereby finding the customer/employee profile that matches with the logged-in user.
     print(user)
-    customers = Customer.objects.all()
-    for customer in customers:
-        if user.id == customer.user.id:
-            print(f'This user has a customer account')
-            print(f'customer ID is {customer.id}')
-            return HttpResponseRedirect(f'customer_profile/{customer.id}')
-        else:
-            print('This user has no customer profile')
-    return HttpResponseRedirect(reverse('customers:customer_form'))
+    return HttpResponseRedirect(f'/employees/employee_form')
+    # return render(request, 'employees/index.html')
 
 
-def customer_form(request):
-    return render(request, 'customers/customer.html')
+def employee_form(request):
+    return render(request, 'employees/employee.html')
 
 
-def create(request):
-    user_id = request.user
-    print(user_id.id)
+def create_employee_profile(request):
+    user = request.user
     if request.method == 'POST':
         name = request.POST.get('name')
-        address = request.POST.get('address')
-        zip_code = request.POST.get('zipcode')
-        user_id = user_id
-        new_customer = Customer(name=name, address=address,
-                                zipcode=zip_code, balance=0, user=user_id)
-        new_customer.save()
-        return HttpResponseRedirect(f'/customers/customer_profile/{new_customer.id}')
+        zip_code = request.POST.get('zip_code')
+        user_id = user
+        new_employee = Employee(name=name, route_zipcode=zip_code, user=user_id)
+        new_employee.save()
+        return HttpResponseRedirect(f'/employees/employee_profile/{new_employee.id}')
     else:
-        return render(request, '/customer.html')
+        return HttpResponseRedirect('/employees/employee_form')
 
 
-def customer_profile(request, customer_id):
-    customer = Customer.objects.get(pk=customer_id)
+def employee_profile(request, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    customers = apps.get_model('customers.Customer')
+    all_customers = customers.objects.all()
+    today = date.today()
+    day = date.today().strftime("%A")
     context = {
-        'customer': customer
+        'employee': employee,
+        'customers': all_customers,
+        'date': today,
+        'day': day
     }
-    return render(request, 'customers/customer_profile.html', context)
+    return render(request, 'employees/employee_profile.html', context)
 
 
-def change_pickup(request, customer_id):
-    customer = Customer.objects.get(pk=customer_id)
+def employee_prospects(request, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    customer = apps.get_model('customers.Customer')
+    all_customers = customer.objects.all()
     context = {
-        'customer': customer
+        'employee': employee,
+        'customers': all_customers
     }
-    return render(request, 'customers/change_pickup.html', context)
+    return render(request, 'employees/employee_prospects.html', context)
 
 
-def update_weekly_pickup(request, customer_id):
-    customer = Customer.objects.get(pk=customer_id)
-    change_weekly_pickup = request.POST.get('update_weekly_pickup')
-    customer.weekly_pickup = change_weekly_pickup
-    customer.save()
-    # include '/' before redirect
-    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+def prospect_search(request, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    if request.method == 'POST':
+        form_input = request.POST.get('pickup_day')
+        return HttpResponseRedirect(f'/employees/employee_prospect/results/{form_input}/{employee.id}')
 
 
-def one_time_pickup(request, customer_id):
-    customer = Customer.objects.get(pk=customer_id)
-    customer.one_time_pickup = request.POST.get('one_time_pickup')
-    customer.save()
-    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+def employee_prospect_results(request, form_input, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    Customer = apps.get_model('customers.Customer')
+    customers = Customer.objects.all()
+    pickup_day = form_input
+    prospects = Customer.objects.filter(weekly_pickup=pickup_day)
+    context = {
+        'employee': employee,
+        'customers': customers,
+        'prospects': prospects
+    }
+    print(pickup_day)
+    print(customers)
+    return render(request, 'employees/employee_prospect_results.html', context)
 
 
-def account_period(request, customer_id):
-    customer = Customer.objects.get(pk=customer_id)
-    customer.start_date = request.POST.get('start_date')
-    customer.end_date = request.POST.get('end_date')
-    customer.save()
-    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+def confirm_one_time(request, customer_id, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    Customer = apps.get_model('customers.Customer')
+    target_customer = Customer.objects.get(pk=customer_id)
+    target_customer.one_time_pickup = None
+    target_customer.balance += 10
+    target_customer.save()
+    return redirect(f'/employees/employee_profile/{employee.id}')
 
 
-def suspend_account(request, customer_id):
-    customer = Customer.objects.get(pk=customer_id)
-    customer.start_date = ""
-    customer.end_date = ""
-    customer.save()
-    return HttpResponseRedirect(f'/customers/customer_profile/{customer.id}')
+def confirm_weekly(request, customer_id, employee_id):
+    employee = Employee.objects.get(pk=employee_id)
+    Customer = apps.get_model('customers.Customer')
+    target_customer = Customer.objects.get(pk=customer_id)
+    target_customer.weekly_pickup = None
+    target_customer.balance += 10
+    target_customer.save()
+    return redirect(f'/employees/employee_profile/{employee.id}')
+
