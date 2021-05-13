@@ -5,11 +5,17 @@
 {% block anchors %}
 <li><a href="{% url 'customers:customer_profile' customer.id %}">Account Info</a></li>
     <li><a href="{% url 'customers:change_pickup' customer.id %}">Change Pick-up Day</a></li>
-    <li><a href="">Suspend Account</a></li>
+    <li><a href="{% url 'customers:suspend_account' customer.id %}">Suspend Account</a></li>
 {% endblock %}
 
 {% block content %}
-<h1>John Doe</h1>
+<div class="change-weekly">
+
+</div>
+<div class="change-one-time">
+    
+</div>
+<h1></h1>
 <form action="{% url 'customers:update_weekly_pickup' customer.id %}" method="post">
     {% csrf_token %}
     weekly pickup change: <input type="text" id="update_weekly_pickup" name="update_weekly_pickup">
