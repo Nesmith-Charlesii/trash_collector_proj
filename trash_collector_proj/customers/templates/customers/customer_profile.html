@@ -9,7 +9,9 @@
 
 {% block anchors %}
 <li><a href="{% url 'customers:customer_profile' customer.id %}">Account Info</a></li>
+{% if customer.weekly_pickup != None %}
 <li><a href="{% url 'customers:change_pickup' customer.id %}">Change Pick-up Day</a></li>
+{% endif %}
 <li><a href="{% url 'customers:suspend_account' customer.id %}">Suspend Account</a></li>
 <li><a href="{% url 'logout' %}">Log Out</a></li>
 {% endblock %}
@@ -73,12 +75,28 @@
     </div>
         {% endif %}
     <div class="display-bottom">
+        {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup == None %}
         <div class="weekly-pickup">
-            {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup == None %}
-            <p>Schedule a weekly <a href="{% url 'customers:change_pickup' customer.id %}">pick up day</a> to start your service</p>
-            {% endif %}
+            <form action="{% url 'customers:update_weekly_pickup' customer.id %}" method="post">
+            {% csrf_token %}
+                <div class="form-group">
+                    <p id="schedule-message" class="text-center">Schedule a weekly pick up day to start your service</p>
+                    <div class="d-flex flex-row">
+                        <select id="update_weekly_pickup" name="update_weekly_pickup" class="form-control">
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                        <input class="btn btn-sm btn-primary mx-2" id="schedule-day" type="submit" value="schedule">
+                    </div>
+                </div>
+            </form>
         </div>
-        {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup != None %}
+        {% endif %}
+        {% if customer.start_date != None and customer.end_date != None and customer.weekly_pickup != None and customer.one_time_pickup == None%}
         <div class="one-time-request">
             <form action="{% url 'customers:one_time_pickup' customer.id %}" method="post">
                 {% csrf_token %}
@@ -88,13 +106,11 @@
                     <input id="confirm-one-time" type="submit" value="confirm">
                 </div>
             </form>
-            {% endif %}
-            {% if customer.one_time_pickup != None %}
+        </div>
+        {% elif customer.one_time_pickup != None %}
         <div class="one-time">
-            <h3>One-Time Pickup: {{customer.one_time_pickup}}</h3>
+            <h3>Your one time pickup is scheduled on: {{customer.one_time_pickup}}</h3>
         </div>
-            {% endif %}
-        </div>
+        {% endif %}
     </div>
-</div>
 {% endblock %}
