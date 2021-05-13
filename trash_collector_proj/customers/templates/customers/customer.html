@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/customer.css' %}">
+{% endblock %}
+
 {% block content %}
-<form action="{% url 'customers:create' %}" method="post">
+<div class="customer-form" id="customer-form">
+    <div class="customer-border">
+        <h1 class="text-center my-5">Create Your Customer Account</h1>
+        <hr class="hr-form">
+        <div class="right-display-one my-5">
+              <h3>Customer Info</h3>
+        </div>
+        <div class="left-change-one">
+            <form action="{% url 'customers:create' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group center">
+                    name:<input class="form-control form-control-sm col-sm-4" type="text" name="name" id="name"><br>
+                    address:<input class="form-control form-control-sm col-sm-4" type="text" name="address" id="address"><br>
+                    zipcode:<input class="form-control form-control-sm col-sm-4" type="text" name="zipcode" id="zipcode"><br>
+                </div>
+                <input type="submit" value="sign up">
+            </form>
+        </div>
+    </div>
+</div>
+<!--<form action="{% url 'customers:create' %}" method="post">
     {% csrf_token %}
     <div class="form-group center">
         name:<input class="form-control form-control-sm col-sm-4" type="text" name="name" id="name"><br>
@@ -9,5 +34,5 @@
         zipcode:<input class="form-control form-control-sm col-sm-4" type="text" name="zipcode" id="zipcode"><br>
     </div>
     <input type="submit" value="sign up">
-</form>
+</form>-->
 {% endblock %}
