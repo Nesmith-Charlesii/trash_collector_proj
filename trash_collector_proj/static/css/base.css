@@ -2,6 +2,13 @@ nav{
     background-color: rgb(8, 10, 105);
 }
 
+.navbar{
+    position:fixed;
+    z-index:1;
+    top: 0;
+    width: 100%;
+}
+
 ul li{
     margin-right: 20px;
     text-transform: uppercase;

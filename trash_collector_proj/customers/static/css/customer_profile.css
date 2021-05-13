@@ -2,9 +2,15 @@ html{
     overflow: hidden;
     margin: 0px;
     box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.viewport {
+    height: 100vh;
 }
 
 h1{
+    padding-top: 30px;
     font-family: arial;
     color: rgb(8, 10, 105);
 }
@@ -222,4 +228,82 @@ hr{
     align-items: center;
     font-family: arial;
     box-shadow: 4px 4px 10px rgb(222, 222, 222);
+}
+
+.change-day-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgb(40,40,40);
+    height: 100vh;
+}
+
+.right-display-change{
+    display: flex;
+    flex-direction: column;
+}
+
+.right-display-change p{
+    font-family: arial;
+    margin-top: 10px;
+}
+
+.form-border{
+    border: 2px solid rgb(237,237,237);
+    border-radius: 5px;
+    box-shadow: 6px 10px 10px rgb(200, 222, 255);
+    padding: 50px;
+}
+
+.hr-form{
+    width: 500px;
+}
+
+#change-day-message{
+    font-family: arial;
+    font-weight: bold;
+}
+
+.one-time-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgb(40,40,40);
+    height: 100vh;
+}
+
+.right-display-one{
+    display: flex;
+    flex-direction: column;
+}
+
+.right-display-one p{
+font-family: arial;
+    margin-top: 10px;
+}
+
+.one-time-border{
+    border: 2px solid rgb(237,237,237);
+    border-radius: 5px;
+    box-shadow: 6px 10px 10px rgb(200, 222, 255);
+    padding: 50px;
+}
+
+#change-one-time-message{
+    display: flex;
+    justify-content: center;
+    font-family: arial;
+    font-weight: bold;
+}
+
+.one-time-input{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.input-one-time{
+    display: flex;
+    justify-content: center;
 }

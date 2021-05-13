@@ -10,7 +10,10 @@
 {% block anchors %}
 <li><a href="{% url 'customers:customer_profile' customer.id %}">Account Info</a></li>
 {% if customer.weekly_pickup != None %}
-<li><a href="{% url 'customers:change_pickup' customer.id %}">Change Pick-up Day</a></li>
+<li><a href="#change-day-form">Change Weekly Pickup</a></li>
+{% endif %}
+{% if customer.one_time_pickup != None %}
+<li><a href="#one-time-form">Change One-Time Pickup</a></li>
 {% endif %}
 <li><a href="{% url 'customers:suspend_account' customer.id %}">Suspend Account</a></li>
 <li><a href="{% url 'logout' %}">Log Out</a></li>
@@ -28,7 +31,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
+    <div class="viewport">
     <div class="display my-2">
         <div class="left-side">
             <div class="balance">
@@ -113,4 +117,65 @@
         </div>
         {% endif %}
     </div>
+    </div>
+{% if customer.weekly_pickup != None %}
+    <div class="change-day-form" id="change-day-form">
+        <div class="form-border">
+            <h1 class="text-center">Change weekly pickup day</h1>
+            <hr class="hr-form">
+              <div class="right-display-change my-5">
+                  <h2><b>Customer Name:</b> {{customer.name}}</h2>
+                  <p class="my-4"><b>Address:</b> {{customer.address}}</p>
+                  <p><b>Zip Code:</b> {{customer.zipcode}}</p>
+                  <p><b>Current Weekly Pickup Day:</b> {{customer.weekly_pickup}}</p>
+                </div>
+                <div class="left-side-change">
+                    <form action="{% url 'customers:update_weekly_pickup' customer.id %}" method="post">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <p id="change-day-message" class="text-center">Choose a day most convenient for you!</p>
+                            <div class="d-flex flex-row">
+                                <select name="update_weekly_pickup" class="form-control">
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                </select>
+                                <input class="btn btn-sm btn-primary mx-2" id="change-day" type="submit" value="schedule">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="one-time-form" id="one-time-form">
+        <div class="one-time-border">
+            <h1 class="text-center">Change weekly pickup day</h1>
+            <hr class="hr-form">
+            <div class="right-display-one my-5">
+                  <h2><b>Customer Name:</b> {{customer.name}}</h2>
+                  <p class="my-4"><b>Address:</b> {{customer.address}}</p>
+                  <p><b>Zip Code:</b> {{customer.zipcode}}</p>
+                  <p><b>Current One-Time Pickup Day:</b> {{customer.one_time_pickup}}</p>
+            </div>
+            <div class="left-change-one">
+                <form action="{% url 'customers:one_time_pickup' customer.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="one-time-group">
+                            <label for="one_time_pickup" id="change-one-time-message">Would you like an extra one time pickup?</label>
+                            <input class="form-control col-5 one-time-input my-3" type="date" name="one_time_pickup">
+                            <div class="input-one-time">
+                                <input id="confirm-change-one-time" type="submit" value="confirm" class="btn btn-sm btn-success my-4">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
+</div>
 {% endblock %}
