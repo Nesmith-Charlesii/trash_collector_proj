@@ -1,0 +1,38 @@
+.prospect-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgb(40,40,40);
+    height: 100vh;
+}
+
+.right-display-change{
+    display: flex;
+    flex-direction: column;
+}
+
+.right-display-change p{
+    font-family: arial;
+    margin-top: 10px;
+}
+
+.form-border{
+    border: 2px solid rgb(237,237,237);
+    border-radius: 5px;
+    box-shadow: 6px 10px 10px rgb(200, 222, 255);
+    padding: 50px;
+}
+
+.hr-form{
+    width: 500px;
+}
+
+#change-day-message{
+    font-family: arial;
+    font-weight: bold;
+}
+
+.zipcode{
+    font-size: 20px;
+}

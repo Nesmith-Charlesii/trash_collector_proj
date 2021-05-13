@@ -1,32 +1,86 @@
 {% extends 'base.html' %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/employee_profile.css' %}">
+{% endblock %}
+
 {% block anchors_employee %}
     <li><a href="{% url 'employees:employee_profile' employee.id %}">Daily View</a></li>
     <li><a href="{% url 'employees:employee_prospects' employee.id %}">Prospects</a></li>
-    <li><a href="">Confirm Pickups</a></li>
     <li><a href="{% url 'logout' %}">Log Out</a></li>
 {% endblock %}
 
 {% block content %}
-<h1>Welcome {{employee.name}}</h1>
-<h2>Today - {{day}}</h2>
-<p>my zip-code: {{employee.route_zipcode}}</p>
-<br>
-<h3>Customers in my area:</h3>
-{% for customer in customers %}
-    {% if employee.route_zipcode == customer.zipcode and customer.start_date is not None %}
-        <p>{{customer.name}} : {{customer.zipcode}}</p>
-    {% endif %}
-{% endfor %}
-<br>
-<h3>Customer Pickups Today</h3>
-{% for customer in customers %}
-    {% if customer.one_time_pickup == date %} %}
-        <p>{{customer.name}} - {{customer.one_time_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/one_time/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
-    {% elif customer.weekly_pickup == day %}
-        <p>{{customer.name}} - {{customer.weekly_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/weekly/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>
-    {% endif %}
-{% endfor %}
-
-
+<div class="container-fluid">
+    <div class="employee-info text-center" id="employee_info">
+            <h1><b>Employee -</b> {{employee.name}}</h1>
+            <hr>
+            <h2>{{day}} {{date}}</h2>
+            <h3 class="my-4"><b>Assigned Zip Code:</b> {{employee.route_zipcode}}</h3>
+        </div>
+    <div class="display my-5">
+        <div class="pickups-today">
+            <h3>Customer Pickups Today</h3>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="thead col-2">Name</th>
+                        <th class="thead col-2">One Time Pickup</th>
+                        <th class="thead col-2">Daily Pickup</th>
+                        <th class="thead col-2">Location</th>
+                        <th class="thead col-2">Zip Code</th>
+                        <th class="thead col-2">Confirm Pickup</th>
+                    </tr>
+                </thead>
+                {% for customer in customers %}
+        {% if customer.one_time_pickup == date %} %}
+                <tr>
+                    <td>{{customer.name}}</td>
+                    <td>{{customer.one_time_pickup}}</td>
+                    <td>Slot</td>
+                    <td>{{customer.address}}</td>
+                    <td>{{customer.zipcode}}</td>
+                    <td><a class="btn btn-sm btn-primary" href="/employees/confirm_pickup/one_time/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></td>
+                </tr>
+            <!--<p>{{customer.name}} - {{customer.one_time_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/one_time/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>-->
+        {% elif customer.weekly_pickup == day %}
+                <tr>
+                    <td>{{customer.name}}</td>
+                    <td>Slot</td>
+                    <td>{{customer.one_time_pickup}}</td>
+                    <td>{{customer.address}}</td>
+                    <td>{{customer.zipcode}}</td>
+                    <td><a class="btn btn-sm btn-primary" href="/employees/confirm_pickup/weekly/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></td>
+                </tr>
+            <!--<p>{{customer.name}} - {{customer.weekly_pickup}} <a class="btn btn-sm btn-success" href="/employees/confirm_pickup/weekly/{{employee.id}}/{{customer.id}}">Confirm Pickup</a></p>-->
+        {% endif %}
+    {% endfor %}
+            </table>
+        </div>
+        <div class="nearby-customers">
+            <h3>Customers in my area:</h3>
+            <hr>
+            <table class="table table-bordered" id="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="thead">Name</th>
+                        <th class="thead">Location</th>
+                        <th class="thead">Zip Code</th>
+                    </tr>
+                </thead>
+                {% for customer in customers %}
+                {% if employee.route_zipcode == customer.zipcode and customer.start_date is not None %}
+                    <tr>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.zipcode}}</td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

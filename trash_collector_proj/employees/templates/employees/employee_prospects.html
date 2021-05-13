@@ -1,19 +1,43 @@
 {% extends 'base.html' %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/employee_prospects.css' %}">
+{% endblock %}
+
 {% block anchors_employee %}
     <li><a href="{% url 'employees:employee_profile' employee.id %}">Daily View</a></li>
     <li><a href="">Prospects</a></li>
-    <li><a href="">Confirm Pickups</a></li>
 {% endblock %}
 
 {% block content %}
-<h1>{{employee.name}} Prospects by Day</h1>
-<form action="{% url 'employees:prospect_search' employee.id%}" method="post">
-    {% csrf_token %}
-    Pickup day: <input type="text" id="pickup_day" name="pickup_day">
-    <input type="submit" value="search">
-</form>
-<br>
-<h3>Prospects</h3>
-
+<div class="prospect-form" id="prospect-form">
+    <div class="form-border">
+        <h1 class="text-center">Prospects By Day</h1>
+        <hr class="hr-form">
+        <div class="right-display-change my-5">
+          <h3><b>Employee Name:</b> {{employee.name}}</h3>
+          <p class="zipcode"><b>Zip Code:</b> {{employee.route_zipcode}}</p>
+        </div>
+        <div class="left-side-change">
+            <form action="{% url 'employees:prospect_search' employee.id%}" method="post">
+            {% csrf_token %}
+                <div class="form-group">
+                    <p id="change-day-message" class="text-center">Upcoming Pickups in Your Zip Code</p>
+                    <div class="d-flex flex-row">
+                        <select name="pickup_day" class="form-control">
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
+                        <input class="btn btn-sm btn-success mx-2" id="change-day" type="submit" value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

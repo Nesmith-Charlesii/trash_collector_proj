@@ -1,0 +1,81 @@
+html{
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.display{
+    padding-top: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+
+.employee_info{
+    display: flex;
+    flex-direction: column;
+    justify-content-content: space-around;
+    text-align: center;
+    font-family: Arial;
+    border: 1px solid rgb(237,237,237);
+    box-shadow: 4px 4px 10px rgb(222, 222, 222);
+}
+
+#employee_info{
+    position: relative;
+    top: 70px;
+    border: 1px solid black;
+    border-radius: 7px;
+    padding: 20px;
+    background-color: rgb(30,30,30);
+    color: rgb(200,200,200);
+    font-family: Arial;
+}
+
+#employee_info h2{
+    animation-name: day-pulse;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes day-pulse{
+    0%{
+        color: rgb(200,200,200);
+    }
+    50%{
+        color: rgb(20,200,200);
+    }
+}
+
+hr{
+    width: 300px;
+}
+
+.nearby-customers{
+    text-align: center;
+    font-family: Arial;
+    border: 1px solid rgb(237,237,237);
+    box-shadow: 6px 10px 10px rgb(200, 222, 255);
+}
+
+.pickups-today{
+    text-align: center;
+    font-family: arial;
+    border: 1px solid rgb(237,237,237);
+    box-shadow: 6px 10px 10px rgb(200, 222, 255);
+    padding: 30px;
+}
+
+#page-break{
+    width: 80%;
+}
+
+#search-header{
+    font-size: 20px;
+    font-family: arial;
+    font-weight: bold;
+}
+
+.btn:hover{
+    background-color: green;
+}
+
