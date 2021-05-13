@@ -79,3 +79,6 @@ hr{
     background-color: green;
 }
 
+.table td{
+    text-align: center;
+}
