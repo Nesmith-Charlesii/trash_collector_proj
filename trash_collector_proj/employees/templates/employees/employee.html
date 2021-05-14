@@ -1,10 +1,34 @@
 {% extends 'base.html' %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/css/employee.css' %}">
+{% endblock %}
+
 {% block content %}
-<form action="{% url 'employees:create_employee_profile' %}" method="post">
+<div class="employee-form" id="employee-form">
+    <div class="employee-border">
+        <h1 class="text-center my-5">Create Your Employee Account</h1>
+        <hr class="hr-form">
+        <div class="right-display-one my-5">
+              <h3>Employee Info</h3>
+        </div>
+        <div class="left-change-one">
+            <form action="{% url 'employees:create_employee_profile' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group center">
+                    name:<input class="form-control form-control-sm col-sm-4" type="text" name="name" id="name"><br>
+                    zipcode:<input class="form-control form-control-sm col-sm-4" type="text" name="zip_code" id="zip_code"><br>
+                </div>
+                <input type="submit" value="sign up">
+            </form>
+        </div>
+    </div>
+</div>
+<!--<form action="{% url 'employees:create_employee_profile' %}" method="post">
     {% csrf_token %}
     name: <input type="text" id="name" name="name">
     zip code: <input type="text" id="zip_code" name="zip_code">
     <input type="submit" value="submit">
-</form>
+</form>-->
 {% endblock %}

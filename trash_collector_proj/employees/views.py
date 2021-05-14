@@ -1,7 +1,7 @@
 import random
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.apps import apps
 from .models import Employee
 from datetime import date
@@ -20,7 +20,7 @@ def index(request):
     for employee in all_employees:
         if user.id == employee.user_id:
             return HttpResponseRedirect(f'/employees/employee_profile/{employee.id}')
-    return HttpResponseRedirect(f'/employees/employee_form')
+    return HttpResponseRedirect(reverse('employees:employee_form'))
 
 
 def employee_form(request):

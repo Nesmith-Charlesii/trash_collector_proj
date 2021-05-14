@@ -1,0 +1,32 @@
+.employee-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgb(40,40,40);
+    height: 100vh;
+}
+
+.employee-border{
+    border: 2px solid rgb(237,237,237);
+    border-radius: 5px;
+    box-shadow: 6px 10px 10px rgb(200, 222, 255);
+    padding: 50px;
+}
+
+#change-one-time-message{
+    display: flex;
+    justify-content: center;
+    font-family: arial;
+    font-weight: bold;
+}
+
+.one-time-input{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.input-one-time{
+    display: flex;
+    justify-content: center;
+}
